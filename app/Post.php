@@ -37,8 +37,16 @@ class Post extends Model
         if ($year = $filters['year']) {
             $query->whereYear('created_at', $year);
         }
+    }
 
-
+    public static function archives() {
+        return Post::selectRaw('date_part(\'year\', created_at) as year, 
+                            to_char(to_timestamp (date_part(\'month\',created_at)::text, \'MM\'), \'Month\') as month,
+                            count(*) as published')
+            ->groupBy('year', 'month')
+            ->orderByRaw('min(created_at) desc')
+            ->get()
+            ->toArray();
     }
 
 }

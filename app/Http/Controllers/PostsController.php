@@ -17,15 +17,7 @@ class PostsController extends Controller
 
         $posts = Post::latest()->filter(request(['month', 'year']))->get();
 
-        $archives = Post::selectRaw('date_part(\'year\', created_at) as year, 
-                            to_char(to_timestamp (date_part(\'month\',created_at)::text, \'MM\'), \'Month\') as month,
-                            count(*) as published')
-                        ->groupBy('year', 'month')
-                        ->orderByRaw('min(created_at) desc')
-                        ->get()
-                        ->toArray();
-
-        return view('posts.index', compact('posts', 'archives'));
+        return view('posts.index', compact('posts'));
     }
 
     public function show($id)
