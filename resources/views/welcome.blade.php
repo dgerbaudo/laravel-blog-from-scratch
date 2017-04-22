@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
 
-        <title>Laravel</title>
+    <title>Laravel</title>
 
-    </head>
-    <body>
-        <h1>Hello World</h1>
-    </body>
+</head>
+<body>
+<ul>
+    @foreach($tasks as $task)
+        <li>{{$task}}</li>
+    @endforeach
+</ul>
+</body>
 </html>
