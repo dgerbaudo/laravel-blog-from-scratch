@@ -39,7 +39,8 @@ class Post extends Model
         }
     }
 
-    public static function archives() {
+    public static function archives()
+    {
         return Post::selectRaw('date_part(\'year\', created_at) as year, 
                             to_char(to_timestamp (date_part(\'month\',created_at)::text, \'MM\'), \'Month\') as month,
                             count(*) as published')
@@ -48,5 +49,11 @@ class Post extends Model
             ->get()
             ->toArray();
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 
 }
