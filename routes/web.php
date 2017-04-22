@@ -11,15 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    $tasks = [
-        'Go to the store',
-        'Finish my screencast',
-        'Clean the house'
-    ];
-    return view('welcome', compact('tasks'));
+use Illuminate\Support\Facades\DB;
+
+Route::get('/tasks', function () {
+    $tasks = DB::table('tasks')->latest()->get();
+    return view('tasks.index', compact('tasks'));
 });
 
-Route::get('/about', function () {
-    return view('about');
+Route::get('/tasks/{task}', function ($id) {
+    $task = DB::table('tasks')->find($id);
+    return view('tasks.show', compact('task'));
 });
+
+//Route::get('/about', function () {
+//    return view('about');
+//});
